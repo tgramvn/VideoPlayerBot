@@ -49,13 +49,13 @@ group_call = GroupCallFactory(User, GroupCallFactory.MTPROTO_CLIENT_TYPE.PYROGRA
 async def pause_callbacc(client, CallbackQuery):
     chat_id = CallbackQuery.message.chat.id
     if chat_id in AUDIO_CALL:
-        text = f"⏸ Paused !"
+        text = f"⏸ Tạm dừng !"
         await AUDIO_CALL[chat_id].set_audio_pause(True)
     elif chat_id in VIDEO_CALL:
-        text = f"⏸ Paused !"
+        text = f"⏸ Tạm dừng !"
         await VIDEO_CALL[chat_id].set_video_pause(True)
     else:
-        text = f"❌ Nothing is Playing !"
+        text = f"❌ Không có gì đang chơi !"
     await Client.answer_callback_query(
         CallbackQuery.id, text, show_alert=True
     )
@@ -64,13 +64,13 @@ async def pause_callbacc(client, CallbackQuery):
 async def resume_callbacc(client, CallbackQuery):
     chat_id = CallbackQuery.message.chat.id
     if chat_id in AUDIO_CALL:
-        text = f"▶️ Resumed !"
+        text = f"▶️ Tiếp tục !"
         await AUDIO_CALL[chat_id].set_audio_pause(False)
     elif chat_id in VIDEO_CALL:
-        text = f"▶️ Resumed !"
+        text = f"▶️ Tiếp tục !"
         await VIDEO_CALL[chat_id].set_video_pause(False)
     else:
-        text = f"❌ Nothing is Playing !"
+        text = f"❌ Không có gì đang chơi !"
     await Client.answer_callback_query(
         CallbackQuery.id, text, show_alert=True
     )
@@ -88,13 +88,13 @@ async def end_callbacc(client, CallbackQuery):
         await VIDEO_CALL[chat_id].stop()
         VIDEO_CALL.pop(chat_id)
     else:
-        text = f"❌ Nothing is Playing !"
+        text = f"❌ Không có gì đang chơi !"
     await Client.answer_callback_query(
         CallbackQuery.id, text, show_alert=True
     )
     await Client.send_message(
         chat_id=CallbackQuery.message.chat.id,
-        text=f"✅ **Streaming Stopped & Left The Video Chat !**"
+        text=f"✅ **Phát Trực Tuyến Đã Dừng Và Rời Khỏi Cuộc Trò Chuyện Video !**"
     )
     await CallbackQuery.message.delete()
 
@@ -116,7 +116,7 @@ async def stream(client, m: Message):
         regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
         match = re.match(regex, query)
         if match:
-            await msg.edit("🔄 `Starting YouTube Video Stream ...`")
+            await msg.edit("🔄 Bắt đầu Luồng Video YouTube ...")
             try:
                 meta = ydl.extract_info(query, download=False)
                 formats = meta.get('formats', [meta])
@@ -134,7 +134,7 @@ async def stream(client, m: Message):
                 print(e)
 
         else:
-            await msg.edit("🔄 `Starting Live Video Stream ...`")
+            await msg.edit("🔄 `Bắt đầu phát trực tiếp video ...`")
             link = query
             thumb = "https://telegra.ph/file/3e14128ad5c9ec47801bd.jpg"
 
@@ -212,7 +212,7 @@ async def stream(client, m: Message):
             await msg.delete()
             await m.reply_photo(
                photo=thumb,
-               caption=f"▶️ **Started [Video Streaming](https://t.me/AsmSafone) In {m.chat.title} !**",
+               caption=f"▶️ **Đang [phát trực tiếp](https://nhomtelegram.com) trong {m.chat.title} !**",
                reply_markup=InlineKeyboardMarkup(
                [
                    [
@@ -237,15 +237,15 @@ async def stream(client, m: Message):
 
     else:
         await msg.edit(
-            "💁🏻‍♂️ Do you want to search for a YouTube video?",
+            "💁🏻‍♂️ Bạn có muốn tìm kiếm một video trên YouTube không?",
             reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "✅ Yes", switch_inline_query_current_chat=""
+                        "Có", switch_inline_query_current_chat=""
                     ),
                     InlineKeyboardButton(
-                        "No ❌", callback_data="close"
+                        "Không", callback_data="close"
                     )
                 ]
             ]
