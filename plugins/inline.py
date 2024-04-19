@@ -26,8 +26,8 @@ from youtubesearchpython import VideosSearch
 
 buttons = [
             [
-                InlineKeyboardButton("CHANNEL", url="https://t.me/AsmSafone"),
-                InlineKeyboardButton("SUPPORT", url="https://t.me/AsmSupport"),
+                InlineKeyboardButton("CHANNEL", url="https://t.me/noiquy"),
+                InlineKeyboardButton("SUPPORT", url="https://tgram.vn"),
             ]
          ]
 
@@ -37,7 +37,7 @@ async def search(client, query):
     if query.query == "SAF_ONE":
         answers.append(
             InlineQueryResultArticle(
-                title="Deploy Own Video Player Bot",
+                title="Hi",
                 input_message_content=InputTextMessageContent(f"{REPLY_MESSAGE}\n\n<b>© Powered By : \n@noiquy 👑</b>", disable_web_page_preview=True),
                 reply_markup=InlineKeyboardMarkup(buttons)
                 )
@@ -49,7 +49,7 @@ async def search(client, query):
         await client.answer_inline_query(
             query.id,
             results=answers,
-            switch_pm_text=("✍️ Type An Video Name!"),
+            switch_pm_text=("✍️ Nhập tên video!"),
             switch_pm_parameter="help",
             cache_time=0
         )
@@ -59,7 +59,7 @@ async def search(client, query):
             answers.append(
                 InlineQueryResultArticle(
                     title=v["title"],
-                    description=("Duration: {} Views: {}").format(
+                    description=("Khoảng thời gian: {} Lượt xem: {}").format(
                         v["duration"],
                         v["viewCount"]["short"]
                     ),
@@ -80,7 +80,7 @@ async def search(client, query):
             await query.answer(
                 results=answers,
                 cache_time=0,
-                switch_pm_text=("❌ No Results Found!"),
+                switch_pm_text=("❌ Không có kết quả nào được tìm thấy!"),
                 switch_pm_parameter="",
             )
 
