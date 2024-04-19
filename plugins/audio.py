@@ -21,17 +21,17 @@ async def play(client, m: Message):
     chat_id = m.chat.id
     media = m.reply_to_message
     if not media and not ' ' in m.text:
-        await msg.edit("❗ __Send Me An Live Radio Link / YouTube Video Link / Reply To An Audio To Start Audio Streaming!__")
+        await msg.edit("❗ __Gửi cho tôi một liên kết radio trực tiếp / liên kết video YouTube / trả lời âm thanh để bắt đầu truyền phát âm thanh!__")
 
     elif ' ' in m.text:
         text = m.text.split(' ', 1)
         query = text[1]
         if not 'http' in query:
-            return await msg.edit("❗ __Send Me An Live Stream Link / YouTube Video Link / Reply To An Video To Start Video Streaming!__")
+            return await msg.edit("❗ __Gửi cho tôi Liên kết phát trực tiếp / Liên kết video YouTube / Trả lời video để bắt đầu truyền phát video!__")
         regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
         match = re.match(regex, query)
         if match:
-            await msg.edit("🔄 `Starting YouTube Audio Stream ...`")
+            await msg.edit("🔄 Đang bắt đầu luồng âm thanh YouTube ...")
             try:
                 meta = ydl.extract_info(query, download=False)
                 formats = meta.get('formats', [meta])
@@ -43,7 +43,7 @@ async def play(client, m: Message):
                 print(e)
 
         else:
-            await msg.edit("🔄 `Starting Live Audio Stream ...`")
+            await msg.edit("🔄 Đang bắt đầu phát trực tuyến âm thanh...")
             link = query
 
         vid_call = VIDEO_CALL.get(chat_id)
@@ -64,7 +64,7 @@ async def play(client, m: Message):
             await group_call.start_audio(link, repeat=False)
             AUDIO_CALL[chat_id] = group_call
             await msg.delete()
-            await m.reply_text(f"▶️ **Started [Audio Streaming]({query}) In {m.chat.title} !**",
+            await m.reply_text(f"▶️ **Đã bắt đầu [Truyền phát âm thanh]({query}) In {m.chat.title} !**",
                reply_markup=InlineKeyboardMarkup(
                [
                    [
@@ -84,11 +84,11 @@ async def play(client, m: Message):
                ]),
             )
         except Exception as e:
-            await msg.edit(f"❌ **An Error Occoured !** \n\nError: `{e}`")
+            await msg.edit(f"❌ **Đã xảy ra lỗi !** \n\nError: `{e}`")
             return await group_call.stop()
 
     elif media.audio or media.document:
-        await msg.edit("🔄 `Downloading ...`")
+        await msg.edit("🔄 Đang tải xuống...")
         audio = await client.download_media(media)
 
         vid_call = VIDEO_CALL.get(chat_id)
@@ -109,7 +109,7 @@ async def play(client, m: Message):
             await group_call.start_audio(audio, repeat=False)
             AUDIO_CALL[chat_id] = group_call
             await msg.delete()
-            await m.reply_text(f"▶️ **Started [Audio Streaming](https://t.me/AsmSafone) In {m.chat.title} !**",
+            await m.reply_text(f"▶️ **Đã bắt đầu [Truyền phát âm thanh](https://tgram.vn) trong {m.chat.title} !**",
                reply_markup=InlineKeyboardMarkup(
                [
                    [
@@ -134,7 +134,7 @@ async def play(client, m: Message):
 
     else:
         await msg.edit(
-            "💁🏻‍♂️ Do you want to search for a YouTube song?",
+            "💁🏻‍♂️ Bạn có muốn tìm kiếm một bài hát YouTube?",
             reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -153,10 +153,10 @@ async def play(client, m: Message):
 @Client.on_message(filters.command(["restart", f"restart@{USERNAME}"]))
 @sudo_users_only
 async def restart(client, m: Message):
-    k = await m.reply_text("🔄 `Restarting ...`")
+    k = await m.reply_text("🔄 `Khởi động lại ...`")
     await sleep(3)
     os.execl(sys.executable, sys.executable, *sys.argv)
     try:
-        await k.edit("✅ **Restarted Successfully! \nJoin @AsmSafone For More!**")
+        await k.edit("✅ **Đã khởi động lại thành công!**")
     except:
         pass
