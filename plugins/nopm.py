@@ -45,8 +45,8 @@ async def nopm(client, message):
                 await client.delete_messages(message.chat.id, [old["msg"], old["s"]])
             OLD_PMS[message.chat.id] = {"msg":m.updates[1].message.id, "s":message.message_id}
         except BotInlineDisabled:
-            print(f"[WARN] - Inline Mode for @{USERNAME} is not enabled. Enable from @Botfather to enable PM Permit !")
-            await message.reply_text(f"{REPLY_MESSAGE}\n\n<b>© Powered By : \n@AsmSafone | @AsmSupport 👑</b>")
+            print(f"[WARN] - Chế độ nội tuyến cho @{USERNAME} không được kích hoạt. Kích hoạt từ @Botfather để kích hoạt PM Permit !")
+            await message.reply_text(f"{REPLY_MESSAGE}\n\n<b>© Powered By : \n@noiquy👑</b>")
         except Exception as e:
             print(e)
             pass
